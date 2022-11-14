@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+<model name ='poop_lower'>
+  <pose>0 0 0.5 0 0 0</pose>
+    <link name='lower_link'>
+      <inertial>
+        <mass>0.165</mass>
+        <inertia>
+          <ixx>147.491791</ixx>
+          <ixy>-4.949071</ixy>
+          <ixz>-0.258245</ixz>
+          <iyy>10.094223</iyy>
+          <iyz>-0.634677</iyz>
+          <izz>153.751083</izz>
+        </inertia>
+      </inertial>
+      <collision name='lower_colision'>
+        <geometry>
+          <mesh>
+            <uri>model://poop_lower/poop3.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='lower_visual'>
+        <geometry>
+          <mesh>
+            <uri>model://poop_lower/poop3.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

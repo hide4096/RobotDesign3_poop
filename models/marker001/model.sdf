@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+<sdf version="1.6">
+<model name="marker001">
+  <static>true</static>
+  <pose>0 0 0 0 0 0</pose>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.02 0.02 0.004</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://marker001/materials/marker001.material</uri>
+            <name>marker001</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
