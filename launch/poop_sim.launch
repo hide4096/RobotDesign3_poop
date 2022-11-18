@@ -1,26 +1,19 @@
 <?xml version="1.0"?>
 <launch>
 
-  <!-- MoveIt configurations-->
   <arg name="use_gui" default="false" />
-  <!-- By default, we do not start a database (it can be large) -->
   <arg name="db" default="false" />
-  <!-- Allow user to specify database location -->
   <arg name="db_path" default="$(find crane_x7_moveit_config)/default_warehouse_mongo_db" />
-  <!-- By default, we are not in debug mode -->
   <arg name="moveit_debug" default="false" />
 
-  <!-- Gazebo configurations-->
   <arg name="gazebo_debug" default="false"/>
   <arg name="gui" default="true"/>
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="headless" default="false"/>
   
-  <!-- crane_x7_d435 configurations -->
   <arg name="use_gazebo" default="true" />
 
-  <!-- Change the controller type of gripper from position to effort -->
   <arg name="use_effort_gripper" default="false" />
 
   <include file="$(find crane_x7_control)/launch/crane_x7_fake_control.launch">
@@ -36,11 +29,9 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
 
-  <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
     command="$(find xacro)/xacro --inorder '$(find crane_x7_d435)/urdf/crane_x7_d435.xacro' use_effort_gripper:=$(arg use_effort_gripper) use_gazebo:=$(arg use_gazebo)"
     />
- <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
         args="-urdf -model crane_x7 -param robot_description -z 1.02"/>
 
