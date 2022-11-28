@@ -2,4 +2,4 @@
 
 CRANE-X7でハノイの塔を解くプログラムです。ただし、ハノイの塔はうんこの形をしています。
 
-2022 Aso Hidetoshi asouhide2002@gmail.com
+- © 2022 Aso Hidetoshi
