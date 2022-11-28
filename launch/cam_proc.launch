@@ -1,0 +1,15 @@
+<launch>
+  <node name="usb_cam_node" pkg="usb_cam" type="usb_cam_node" output="screen">
+    <param name="camera_info_url" value="file://$(find showcam)/config/camera.yaml"/>
+  </node>
+  <node name="image_proc" pkg="image_proc" type="image_proc" ns="usb_cam_node" output="screen"/>
+
+  <node name="image_rect_view" pkg="image_view" type="image_view">
+    <remap from="image" to="/usb_cam_node/image_rect"/>
+  </node>
+
+  <node name="image_raw_view" pkg="image_view" type="image_view">
+    <remap from="image" to="/usb_cam_node/image_mono"/>
+  </node>
+
+</launch>
