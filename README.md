@@ -2,7 +2,6 @@
 
 CRANE-X7でハノイの塔を解くプログラムです。ただし、ハノイの塔はうんこの形をしています。
 
-
 CRANE-X7の制御にはアールティ社様の[crane_x7_ros](https://github.com/rt-net/crane_x7_ros)を使用しています。
 
 ARマーカーの検出には[ar_track_alvar](https://github.com/ros-perception/ar_track_alvar)を使用しています。
