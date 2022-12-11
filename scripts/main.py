@@ -7,6 +7,7 @@ import moveit_commander
 import actionlib
 import geometry_msgs.msg
 import rosnode
+import tf
 from tf import transformations
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 import math
@@ -36,6 +37,8 @@ def main():
     gripper_goal = GripperCommandGoal()
     gripper_goal.command.max_effort = 4.0
 
+    tf_listener = tf.TransformListener()
+
     rospy.sleep(1.0)
 
     while True:
@@ -51,12 +54,15 @@ def main():
 
         print("Start")
 
-        for i in range(0,360,45):
+        ar_pos = None
+        ar_rot = None
+
+        for i in range(0,181,45):
 
             target_pose = Pose()
             target_pose.position.x = 0.1 * math.sin(deg2rad(i))
             target_pose.position.y = -0.1 * math.cos(deg2rad(i))
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.2
 
 
             q = quaternion_from_euler(deg2rad(135),0.0,deg2rad(i))
@@ -71,7 +77,33 @@ def main():
                 print("Failed")
                 while True:
                     rospy.sleep(1.0)
+            
+            rospy.sleep(0.1)
+
+            try:
+                (ar_pos,ar_rot) = tf_listener.lookupTransform('/base_link','/ar_marker_0',rospy.Time(0))
+            except:
+                continue
+
+            rospy.sleep(0.5)
+
+        try:
+            target_pose = Pose()
+            target_pose.position.x = ar_pos[0]
+            target_pose.position.y = ar_pos[1]
+            target_pose.position.z = 0.1
+            ar_yaw = euler_from_quaternion((ar_rot[0],ar_rot[1],ar_rot[2],ar_rot[3]))[2]
+            q = quaternion_from_euler(-math.pi,0.0,-ar_yaw)
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+
+            arm.set_pose_target(target_pose)
+            arm.go()
             rospy.sleep(1.0)
+        except:
+            continue
 
 if __name__ == '__main__':
     rospy.init_node("Move_arm_example")
