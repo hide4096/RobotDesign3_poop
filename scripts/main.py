@@ -51,13 +51,15 @@ def main():
 
         print("Start")
 
-        for i in range(180):
+        for i in range(0,360,45):
 
             target_pose = Pose()
+            target_pose.position.x = 0.1 * math.sin(deg2rad(i))
+            target_pose.position.y = -0.1 * math.cos(deg2rad(i))
             target_pose.position.z = 0.3
 
 
-            q = quaternion_from_euler(deg2rad(160),0.0,deg2rad(i))
+            q = quaternion_from_euler(deg2rad(135),0.0,deg2rad(i))
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
             target_pose.orientation.z = q[2]
