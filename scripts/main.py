@@ -31,7 +31,7 @@ def deg2rad(degree):
     return degree * (math.pi/180.0)
 
 def sweep(arm,tf_listener,ar_pos,ar_rot,marker_name):
-    for i in range(0,180,45):
+    for i in range(90,180,45):
 
         target_pose = Pose()
         target_pose.position.x = 0.1 * math.sin(deg2rad(i))
@@ -121,8 +121,8 @@ def move(arm,gripper,gripper_goal,tf_listener,ar_pos,ar_rot,marker_name,frm,to):
 
 def main():
     arm = moveit_commander.MoveGroupCommander("arm")
-    arm.set_max_velocity_scaling_factor(0.4)
-    arm.set_max_acceleration_scaling_factor(1.0)
+    arm.set_max_velocity_scaling_factor(0.5)
+    arm.set_max_acceleration_scaling_factor(0.1)
     gripper = actionlib.SimpleActionClient("crane_x7/gripper_controller/gripper_cmd", GripperCommandAction)
     gripper.wait_for_server()
     gripper_goal = GripperCommandGoal()
@@ -159,30 +159,30 @@ def main():
 
         sweep(arm,tf_listener,ar_pos,ar_rot,marker_name)
 
-        mn = marker_name[0]
+        mn = marker_name[6]
+        if mn in ar_pos:
 
-        target_pose = Pose()
-        target_pose.position.x = ar_pos[mn][0]
-        target_pose.position.y = ar_pos[mn[0]][1]
-        target_pose.position.z = ar_pos[mn[0]][2]+1.0
-        ar_yaw = euler_from_quaternion((ar_rot[mn][0],ar_rot[mn][1],ar_rot[mn][2],ar_rot[mn][3]))[2]
-        q = quaternion_from_euler(-math.pi,0.0,ar_yaw)
-        target_pose.orientation.x = q[0]
-        target_pose.orientation.y = q[1]
-        target_pose.orientation.z = q[2]
-        target_pose.orientation.w = q[3]
+            target_pose = Pose()
+            target_pose.position.x = ar_pos[mn][0]
+            target_pose.position.y = ar_pos[mn][1]
+            target_pose.position.z = ar_pos[mn][2]+0.09
+            ar_yaw = euler_from_quaternion((ar_rot[mn][0],ar_rot[mn][1],ar_rot[mn][2],ar_rot[mn][3]))[2]
+            q = quaternion_from_euler(-math.pi,0.0,ar_yaw)
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
 
-        arm.set_pose_target(target_pose)
-        if arm.go() is False:
-            print("Failed")
-            while True:
-                rospy.sleep(1.0)
+            arm.set_pose_target(target_pose)
+            if arm.go() is False:
+                print("Failed")
+                continue
 
-        rospy.sleep(1.0)
-        gripper_goal.command.position = 0.1
-        gripper.send_goal(gripper_goal)
-        gripper.wait_for_result(rospy.Duration(1.0))
-        rospy.sleep(2.0)
+            rospy.sleep(1.0)
+            gripper_goal.command.position = 0.1
+            gripper.send_goal(gripper_goal)
+            gripper.wait_for_result(rospy.Duration(1.0))
+            rospy.sleep(2.0)
 
 if __name__ == '__main__':
     rospy.init_node("Move_arm_example")
