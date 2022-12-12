@@ -9,6 +9,7 @@ import actionlib
 import geometry_msgs.msg
 import rosnode
 import tf
+import hanoi
 from tf import transformations
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 import math
@@ -28,9 +29,6 @@ def yaw_of(object_orientation):
 
 def deg2rad(degree):
     return degree * (math.pi/180.0)
-
-
-
 
 def sweep(arm,tf_listener,ar_pos,ar_rot,marker_name):
     for i in range(0,180,45):
@@ -67,6 +65,60 @@ def sweep(arm,tf_listener,ar_pos,ar_rot,marker_name):
     
     return
 
+def move(arm,gripper,gripper_goal,tf_listener,ar_pos,ar_rot,marker_name,frm,to):
+
+    target_pose = Pose()
+    target_pose.position.x = ar_pos[frm][0]
+    target_pose.position.y = ar_pos[frm][1]
+    target_pose.position.z = ar_pos[frm][2]+1.0
+    ar_yaw = euler_from_quaternion((ar_rot[frm][0],ar_rot[frm][1],ar_rot[frm][2],ar_rot[frm][3]))[2]
+    q = quaternion_from_euler(-math.pi,0.0,ar_yaw)
+    target_pose.orientation.x = q[0]
+    target_pose.orientation.y = q[1]
+    target_pose.orientation.z = q[2]
+    target_pose.orientation.w = q[3]
+
+    arm.set_pose_target(target_pose)
+
+    if arm.go() is False:
+        print("Failed")
+        while True:
+            rospy.sleep(1.0)
+
+    rospy.sleep(1.0)
+
+    gripper_goal.command.position = 0.1
+    gripper.send_goal(gripper_goal)
+    gripper.wait_for_result(rospy.Duration(1.0))
+
+    rospy.sleep(1.0)
+
+    target_pose = Pose()
+    target_pose.position.x = ar_pos[to][0]
+    target_pose.position.y = ar_pos[to][1]
+    target_pose.position.z = ar_pos[to][2]+1.0
+    ar_yaw = euler_from_quaternion((ar_rot[to][0],ar_rot[to][1],ar_rot[to][2],ar_rot[to][3]))[2]
+    q = quaternion_from_euler(-math.pi,0.0,ar_yaw)
+    target_pose.orientation.x = q[0]
+    target_pose.orientation.y = q[1]
+    target_pose.orientation.z = q[2]
+    target_pose.orientation.w = q[3]
+
+    arm.set_pose_target(target_pose)
+
+    if arm.go() is False:
+        print("Failed")
+        while True:
+            rospy.sleep(1.0)
+
+    rospy.sleep(1.0)
+
+    gripper_goal.command.position = 1.2
+    gripper.send_goal(gripper_goal)
+    gripper.wait_for_result(rospy.Duration(1.0))
+
+    rospy.sleep(1.0)
+
 def main():
     arm = moveit_commander.MoveGroupCommander("arm")
     arm.set_max_velocity_scaling_factor(0.4)
@@ -82,6 +134,10 @@ def main():
     marker_name = []
     for i in range(0,7):
         marker_name.append("/ar_marker_" + str(i))
+    
+    marker_ground = [marker_name[0],marker_name[1],marker_name[2]]
+    marker_poop = [marker_name[3],marker_name[4],marker_name[5]]
+
 
     rospy.sleep(1.0)
 
@@ -100,8 +156,12 @@ def main():
 
         ar_pos = {}
         ar_rot = {}
+        answer = hanoi.Solve3Hanoi(marker_poop,marker_ground,0,1,2)
 
-        sweep(arm,tf_listener,ar_pos,ar_rot,marker_name)
+        for step in answer:
+            while ar_pos[step[0]] == None or ar_pos[step[1]] == None:
+                sweep(arm,tf_listener,ar_pos,ar_rot,marker_name)
+            move(arm,gripper,gripper_goal,tf_listener,ar_pos,ar_rot,marker_name,step[0],step[1])
 """
         try:
             target_pose = Pose()
