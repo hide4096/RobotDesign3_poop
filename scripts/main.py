@@ -3,6 +3,7 @@
 
 import rospy
 import sys
+import traceback
 import moveit_commander
 import actionlib
 import geometry_msgs.msg
@@ -28,6 +29,44 @@ def yaw_of(object_orientation):
 def deg2rad(degree):
     return degree * (math.pi/180.0)
 
+
+
+
+def sweep(arm,tf_listener,ar_pos,ar_rot,marker_name):
+    for i in range(0,180,45):
+
+        target_pose = Pose()
+        target_pose.position.x = 0.1 * math.sin(deg2rad(i))
+        target_pose.position.y = -0.1 * math.cos(deg2rad(i))
+        target_pose.position.z = 0.2
+
+        q = quaternion_from_euler(deg2rad(140),0.0,deg2rad(i))
+        target_pose.orientation.x = q[0]
+        target_pose.orientation.y = q[1]
+        target_pose.orientation.z = q[2]
+        target_pose.orientation.w = q[3]
+
+        arm.set_pose_target(target_pose)
+
+        if arm.go() is False:
+            print("Failed")
+            while True:
+                rospy.sleep(1.0)
+            
+        rospy.sleep(0.1)
+
+        for name in marker_name:
+            try:
+                (ar_pos[name],ar_rot[name]) = tf_listener.lookupTransform('/base_link',name,rospy.Time(0))
+                print(name)
+            except:
+                #traceback.print_exc()
+                continue
+
+        rospy.sleep(0.5)
+    
+    return
+
 def main():
     arm = moveit_commander.MoveGroupCommander("arm")
     arm.set_max_velocity_scaling_factor(0.4)
@@ -38,6 +77,11 @@ def main():
     gripper_goal.command.max_effort = 4.0
 
     tf_listener = tf.TransformListener()
+
+    # マーカー名生成
+    marker_name = []
+    for i in range(0,7):
+        marker_name.append("/ar_marker_" + str(i))
 
     rospy.sleep(1.0)
 
@@ -54,39 +98,11 @@ def main():
 
         print("Start")
 
-        ar_pos = None
-        ar_rot = None
+        ar_pos = {}
+        ar_rot = {}
 
-        for i in range(0,181,45):
-
-            target_pose = Pose()
-            target_pose.position.x = 0.1 * math.sin(deg2rad(i))
-            target_pose.position.y = -0.1 * math.cos(deg2rad(i))
-            target_pose.position.z = 0.2
-
-
-            q = quaternion_from_euler(deg2rad(135),0.0,deg2rad(i))
-            target_pose.orientation.x = q[0]
-            target_pose.orientation.y = q[1]
-            target_pose.orientation.z = q[2]
-            target_pose.orientation.w = q[3]
-
-            arm.set_pose_target(target_pose)
-
-            if arm.go() is False:
-                print("Failed")
-                while True:
-                    rospy.sleep(1.0)
-            
-            rospy.sleep(0.1)
-
-            try:
-                (ar_pos,ar_rot) = tf_listener.lookupTransform('/base_link','/ar_marker_0',rospy.Time(0))
-            except:
-                continue
-
-            rospy.sleep(0.5)
-
+        sweep(arm,tf_listener,ar_pos,ar_rot,marker_name)
+"""
         try:
             target_pose = Pose()
             target_pose.position.x = ar_pos[0]
@@ -111,6 +127,7 @@ def main():
             import traceback
             traceback.print_exc()
             continue
+"""
 
 if __name__ == '__main__':
     rospy.init_node("Move_arm_example")
