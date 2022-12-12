@@ -91,9 +91,9 @@ def main():
             target_pose = Pose()
             target_pose.position.x = ar_pos[0]
             target_pose.position.y = ar_pos[1]
-            target_pose.position.z = 0.1
+            target_pose.position.z = ar_pos[2]+1.0
             ar_yaw = euler_from_quaternion((ar_rot[0],ar_rot[1],ar_rot[2],ar_rot[3]))[2]
-            q = quaternion_from_euler(-math.pi,0.0,-ar_yaw)
+            q = quaternion_from_euler(-math.pi,0.0,ar_yaw)
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
             target_pose.orientation.z = q[2]
@@ -102,7 +102,14 @@ def main():
             arm.set_pose_target(target_pose)
             arm.go()
             rospy.sleep(1.0)
+            gripper_goal.command.position = 0.1
+            gripper.send_goal(gripper_goal)
+            gripper.wait_for_result(rospy.Duration(1.0))
+            rospy.sleep(2.0)
+
         except:
+            import traceback
+            traceback.print_exc()
             continue
 
 if __name__ == '__main__':
