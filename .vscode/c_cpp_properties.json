@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/shusei/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/shusei/catkin_ws/src/ar_track_alvar/ar_track_alvar/include/**",
+        "/home/shusei/catkin_ws/src/crane_x7_ros/crane_x7_control/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
