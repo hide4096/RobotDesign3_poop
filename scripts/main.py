@@ -159,7 +159,7 @@ def main():
         answer = hanoi.Solve3Hanoi(marker_poop,marker_ground,0,1,2)
 
         for step in answer:
-            while ar_pos[step[0]] == None or ar_pos[step[1]] == None:
+            while step[0] not in ar_pos or step[1] not in ar_pos:
                 sweep(arm,tf_listener,ar_pos,ar_rot,marker_name)
             move(arm,gripper,gripper_goal,tf_listener,ar_pos,ar_rot,marker_name,step[0],step[1])
 """
