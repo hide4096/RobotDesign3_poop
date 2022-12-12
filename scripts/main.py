@@ -156,38 +156,33 @@ def main():
 
         ar_pos = {}
         ar_rot = {}
-        answer = hanoi.Solve3Hanoi(marker_poop,marker_ground,0,1,2)
 
-        for step in answer:
-            while step[0] not in ar_pos or step[1] not in ar_pos:
-                sweep(arm,tf_listener,ar_pos,ar_rot,marker_name)
-            move(arm,gripper,gripper_goal,tf_listener,ar_pos,ar_rot,marker_name,step[0],step[1])
-"""
-        try:
-            target_pose = Pose()
-            target_pose.position.x = ar_pos[0]
-            target_pose.position.y = ar_pos[1]
-            target_pose.position.z = ar_pos[2]+1.0
-            ar_yaw = euler_from_quaternion((ar_rot[0],ar_rot[1],ar_rot[2],ar_rot[3]))[2]
-            q = quaternion_from_euler(-math.pi,0.0,ar_yaw)
-            target_pose.orientation.x = q[0]
-            target_pose.orientation.y = q[1]
-            target_pose.orientation.z = q[2]
-            target_pose.orientation.w = q[3]
+        sweep(arm,tf_listener,ar_pos,ar_rot,marker_name)
 
-            arm.set_pose_target(target_pose)
-            arm.go()
-            rospy.sleep(1.0)
-            gripper_goal.command.position = 0.1
-            gripper.send_goal(gripper_goal)
-            gripper.wait_for_result(rospy.Duration(1.0))
-            rospy.sleep(2.0)
+        mn = marker_name[0]
 
-        except:
-            import traceback
-            traceback.print_exc()
-            continue
-"""
+        target_pose = Pose()
+        target_pose.position.x = ar_pos[mn][0]
+        target_pose.position.y = ar_pos[mn[0]][1]
+        target_pose.position.z = ar_pos[mn[0]][2]+1.0
+        ar_yaw = euler_from_quaternion((ar_rot[mn][0],ar_rot[mn][1],ar_rot[mn][2],ar_rot[mn][3]))[2]
+        q = quaternion_from_euler(-math.pi,0.0,ar_yaw)
+        target_pose.orientation.x = q[0]
+        target_pose.orientation.y = q[1]
+        target_pose.orientation.z = q[2]
+        target_pose.orientation.w = q[3]
+
+        arm.set_pose_target(target_pose)
+        if arm.go() is False:
+            print("Failed")
+            while True:
+                rospy.sleep(1.0)
+
+        rospy.sleep(1.0)
+        gripper_goal.command.position = 0.1
+        gripper.send_goal(gripper_goal)
+        gripper.wait_for_result(rospy.Duration(1.0))
+        rospy.sleep(2.0)
 
 if __name__ == '__main__':
     rospy.init_node("Move_arm_example")
