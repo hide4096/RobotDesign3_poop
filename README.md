@@ -11,6 +11,13 @@ CRANE-X7とintel　RealSense　DepthCamera　D435を使用して実機動作し�
 
 ---
 
+## 動作環境
+
+- Ubuntu 20.04
+- ROS Noetic 
+
+---
+
 ## 実行方法
 
 ### シュミレーションを使う場合
