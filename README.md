@@ -6,6 +6,7 @@ CRANE-X7でハノイの塔を解くプログラムです。ただし、ハノイ
 
 ## 実装内容
 CRANE-X7で２段のハノイの塔を解きます。ハノイの塔のモデルは[Pile of Poo Emoji (U+1F4A9)](https://www.thingiverse.com/thing:1682665)に取っ手と凹凸を追加したものを使用しています。
+
 CRANE-X7とintel　RealSense　DepthCamera　D435を使用して実機動作します。
 
 ---
