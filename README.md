@@ -11,7 +11,7 @@ CRANE-X7でハノイの塔を解くプログラムです。ただし、ハノイ
 
 
 - うんこのモデルにはAlexander Thomas　DrLex様の[Pile of Poo Emoji (U+1F4A9)](https://www.thingiverse.com/thing:1682665)を使用しています。
-- また[Pile of Poo Emoji (U+1F4A9)]にはCRANE-X7のハンドで持ちやすいように取手をつける変更を加えてあります。
+- また[Pile of Poo Emoji (U+1F4A9)]にはCRANE-X7のハンドで持ちやすいように取手を追加、ハノイの塔になるように３分割等の改変を行いました。
 
 
 - このソフトウェアパッケージは，3条項BSDライセンスの下，再頒布および使用が許可されます．
