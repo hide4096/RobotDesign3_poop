@@ -21,6 +21,8 @@ CRANE-X7で２段のハノイの塔を解きます。ハノイの塔のモデル
 1. 垂直に下して、持ち手を離す
 1. 塔の移動が終わるまで2~6を繰り返す
 
+[動作の様子](https://twitter.com/tukugami_cola/status/1603314567282454528)
+
 ## Requirement
 - ROS Noetic
 - [crane_x7_ros](https://github.com/rt-net/crane_x7_ros)
