@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/white.css" id="theme">
+
+        <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section >
+					<section data-background="bg.png"
+		<span style="color:white">
+		<h2><span style="color:white">設計製作論3 中間報告</h2>
+		<p>poop班</p>
+		<p>2022/10/24</p>
+		<p>麻生英寿　相田舟星</p>
+		
+					</section>
+		
+		
+			
+				<section >
+					
+					<h1>目次</h1>
+		<ul>
+		<li>チームの目標</li>
+		<li>進捗
+		<ul>
+		<li>ハノイの塔完成</li>
+		<li>Worldファイル完成</li>
+		<li>Gazeboでコントローラー操作</li>
+		</ul>
+		</li>
+		<li>これからの予定
+		<ul>
+		<li>ハノイの塔の構造を見直す</li>
+		<li>ARマーカーの導入</li>
+		<li>スケジュール</li>
+		</ul>
+		</li>
+		</ul>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>チームの目標</h2>
+		<p><strong>ハノイの塔をロボットアームで解く</strong></p>
+		<br />
+		<p>ただのハノイの塔じゃ面白くないので…</p>
+		<p><strong>見た目をう〇こにします</strong></p>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h1>進捗</h1>
+		<ul>
+		<li>ハノイの塔完成</li>
+		<li>Worldファイル完成</li>
+		<li>Gazeboでコントローラー操作</li>
+		</ul>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>ハノイの塔完成</h2>
+		<p>3Dプリンターで出力しました</p>
+		<p><img src="PXL_20221024_025625534.jpg" width="50%"><img src="./poop2.png" width="50%"></p>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>Worldファイル完成</h2>
+		<p>アームとハノイの塔があるWorldファイルが完成</p>
+		<img src="PXL_20221024_025631994.jpg" width="30%">
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>Gazeboでコントローラー操作</h2>
+		<p>crane_x7_examples内のjoystick_exampleを利用して操作</p>
+		<ul>
+		<li>操作はできたが、動かすところが多くてやりにくい</li>
+		<li>なぜか反応が鈍い</li>
+		</ul>
+		<p>自由度を落としたほうがいいかも</p>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h1>これからの予定</h1>
+		<ul>
+		<li>ハノイの塔の構造を見直す(~10/31)</li>
+		<li>ARマーカーの導入(~10/31)</li>
+		<li>ハノイの塔を解いてみる(~11/14)</li>
+		<li>実機で動かす(~中間発表)</li>
+		</ul>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>ハノイの塔の構造を見直す(~10/31)</h2>
+		<p>Gazeboは物体同士で突き刺さる状態が苦手</p>
+		<p><s>う〇こが飛び散ってしまう</s></p>
+		<p>→位置を指定して積み重ねるようにする</p>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>ARマーカーの導入(~10/31)</h2>
+		<p>ARマーカーによって置き場所を指定する</p>
+		<ul>
+		<li>マーカーからの距離や傾きが取得できる</li>
+		<li>置き場所をマーカーを動かすことで変えられる</li>
+		<li>Gazebo上でシミュレーションできる</li>
+		</ul>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>ハノイの塔を解いてみる(~11/14)</h2>
+		<ul>
+		<li>シミュレーション環境を構築した</li>
+		<li>コントローラで動かせた</li>
+		<li>ROSチュートリアル(noetic)を一通りやった</li>
+		</ul>
+		<p>プログラムの展望が見えてきた…?</p>
+		<p><strong>10月末からプログラムやる</strong></p>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>実機で動かす(~中間発表)</h2>
+		<p>例年の発表や先輩の話を聞くと…</p>
+		<p><strong>シミュレーションと現実で挙動が違う</strong></p>
+		<p>…なので早め(11月第一週)に実機に触っておく</p>
+		
+					</section>
+			
+		
+		
+		
+			
+				<section >
+					
+					<h2>スケジュール</h2>
+		<p><img src="suke.png" alt=""></p>
+		
+					</section>
+			
+		
+		
+			</div>
+		
+		
+		  </div>
+		<script src="../dist/reveal.js"></script>
+        <script src="../plugin/markdown/markdown.js"></script>
+        <script src="../plugin/highlight/highlight.js"></script>
+        <script src="../plugin/notes/notes.js"></script>
+        <script src="../plugin/math/math.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+
+		</script>
+
+	</body>
+</html>
+
