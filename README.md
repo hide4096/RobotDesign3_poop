@@ -28,6 +28,12 @@ CRANE-X7とintel RealSense DepthCamera D415を使用して実機動作します�
 
 ---
 
+## スライド
+
+- [中間報告(10/24)](https://hide4096.github.io/RobotDesign3_poop/slides/1024/#/)
+- 中間発表(11/14?)
+- [最終発表(12/19)](https://hide4096.github.io/RobotDesign3_poop/slides/1219/#/)
+
 ## ライセンス
 
 - CRANE-X7の操作にはアールティ社様の[crane_x7_ros](https://github.com/rt-net/crane_x7_ros)を使用しています。
